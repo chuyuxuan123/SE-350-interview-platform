@@ -29,7 +29,7 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
-      repo: chuyuxuan/SE-350-interview-platform
+      repo: chuyuxuan/se-350-interview-platform
       tags:
         - v1.0.0
     when:
