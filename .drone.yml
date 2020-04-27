@@ -1,0 +1,27 @@
+kind: pipeline
+type: docker
+name: SE-350
+
+steps:
+  - name: install
+    image: node
+    commands:
+      # - yarn config set cache-folder /drone/src/yarn_cache
+      - yarn install --pure-lockfile
+    when:
+      branch:
+        - master
+
+  - name: build
+    image: node
+    commands:
+      - unset CI
+      - yarn build
+    when:
+      branch:
+        - master
+
+volumes:
+  - name: cache
+    host:
+      path: /var/tmp/cache

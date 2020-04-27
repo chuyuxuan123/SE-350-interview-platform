@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from '../assets/logo.svg';
-import '../assets/App.css';
+import React from "react";
+import Header from "./Header";
+import Footer from "./Footer";
+import Sider from "./Sider";
+import { Layout } from "antd";
+import "../assets/layout.css";
+
+const { Content } = Layout;
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        <Header />
+        <Layout>
+          <Sider />
+          <Layout>
+            <Content
+              className="site-layout-background"
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 600,
+              }}
+            >
+              Content
+            </Content>
+          </Layout>
+        </Layout>
+        <Footer />
+      </Layout>
     </div>
   );
 }
