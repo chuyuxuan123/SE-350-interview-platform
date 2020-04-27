@@ -21,6 +21,19 @@ steps:
       branch:
         - master
 
+  - name: docker
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: docker_username
+      password:
+        form_secret: docker_password
+      repo: chuyuxuan/SE-350-interview-platform
+      tags:
+        - v1.0.0
+    when:
+      branch:
+        - master
 # volumes:
 #   - name: cache
 #     host:
