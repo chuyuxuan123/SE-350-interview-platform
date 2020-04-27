@@ -21,7 +21,7 @@ steps:
       branch:
         - master
 
-volumes:
-  - name: cache
-    host:
-      path: /var/tmp/cache
+# volumes:
+#   - name: cache
+#     host:
+#       path: /var/tmp/cache
