@@ -2,6 +2,7 @@ import React from "react";
 import { Layout, Menu } from "antd";
 import "../../assets/layout.css";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { logout, setLogin } from "../../redux/action";
 
 const { Header } = Layout;
@@ -17,9 +18,11 @@ const mapDispatchToProps = {
 
 const Head = (props) => {
   const { login } = props;
+  const history = useHistory();
 
   const handleLogin = () => {
-    props.setLogin(true);
+    history.push("/login");
+    // props.setLogin(true);
   };
 
   const handleLogout = () => {
