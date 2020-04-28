@@ -43,7 +43,13 @@ steps:
     volumes:
       - name: docker_sock
         path: /var/run/docker.sock
+    environment:
+      USERNAME:
+        from_secret: docker_username
+      PASSWORD:
+        from_secret: docker_password
     commands:
+      - docker login -u $USERNAME -p $PASSWORD 
       - docker build --no-cache -t chuyuxuan/se-350 .
       - docker push chuyuxuan/se-350:latest
     when:
