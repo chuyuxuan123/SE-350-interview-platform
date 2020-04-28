@@ -20,7 +20,6 @@ steps:
     when:
       branch:
         - master
-
   # - name: docker
   #   image: plugins/docker
   #   settings:
@@ -38,16 +37,17 @@ steps:
   #   when:
   #     branch:
   #       - master
-    - name: docker
-      image: docker:latest
-      volumes:
-        - name: docker_sock
-          path: /var/run/docker.sock
-      commands:
-        - docker build --no-chche -t chuyuxuan/se-350 .
-        - docker push chuyuxuan/se-350:latest
-      when:
-       branch:
+
+  - name: docker
+    image: docker:latest
+    volumes:
+      - name: docker_sock
+        path: /var/run/docker.sock
+    commands:
+      - docker build --no-chche -t chuyuxuan/se-350 .
+      - docker push chuyuxuan/se-350:latest
+    when:
+      branch:
         - master
 
 volumes:
