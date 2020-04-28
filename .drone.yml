@@ -25,6 +25,9 @@ steps:
     image: plugins/docker
     settings:
       insecure: true
+      volumes:
+        - name: docker_sock
+          path: /var/run/docker.sock
       username:
         from_secret: docker_username
       password:
@@ -35,7 +38,13 @@ steps:
     when:
       branch:
         - master
-# volumes:
-#   - name: cache
-#     host:
-#       path: /var/tmp/cache
+
+volumes:
+  - name: cache
+    host:
+      path: /var/tmp/cache
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
