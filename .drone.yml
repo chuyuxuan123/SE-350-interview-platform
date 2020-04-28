@@ -21,22 +21,33 @@ steps:
       branch:
         - master
 
-  - name: docker
-    image: plugins/docker
-    settings:
-      insecure: true
+  # - name: docker
+  #   image: plugins/docker
+  #   settings:
+  #     insecure: true
+  #     volumes:
+  #       - name: docker_sock
+  #         path: /var/run/docker.sock
+  #     username:
+  #       from_secret: docker_username
+  #     password:
+  #       from_secret: docker_password
+  #     repo: chuyuxuan/se-350-interview-platform
+  #     tags:
+  #       - v1.0.0
+  #   when:
+  #     branch:
+  #       - master
+    - name: docker
+      image: docker:latest
       volumes:
         - name: docker_sock
           path: /var/run/docker.sock
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-      repo: chuyuxuan/se-350-interview-platform
-      tags:
-        - v1.0.0
-    when:
-      branch:
+      commands:
+        - docker build --no-chche -t chuyuxuan/se-350 .
+        - docker push chuyuxuan/se-350:latest
+      when:
+       branch:
         - master
 
 volumes:
