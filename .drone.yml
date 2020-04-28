@@ -44,7 +44,7 @@ steps:
       - name: docker_sock
         path: /var/run/docker.sock
     commands:
-      - docker build --no-chche -t chuyuxuan/se-350 .
+      - docker build --no-cache -t chuyuxuan/se-350 .
       - docker push chuyuxuan/se-350:latest
     when:
       branch:
