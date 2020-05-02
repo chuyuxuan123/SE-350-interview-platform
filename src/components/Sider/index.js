@@ -1,7 +1,8 @@
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/icons";
+import { NotificationOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import React from "react";
-import '../../assets/layout.css'
+import { NavLink } from "react-router-dom";
+import "../../assets/layout.css";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -11,8 +12,8 @@ const Side = () => {
     <Sider width={200} className="site-layout-background">
       <Menu
         mode="inline"
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
+        // defaultSelectedKeys={["1"]}
+        defaultOpenKeys={["sub1", "sub3"]}
         style={{ height: "100%", borderRight: 0 }}
       >
         <SubMenu
@@ -20,16 +21,16 @@ const Side = () => {
           title={
             <span>
               <UserOutlined />
-              subnav 1
+              试题管理
             </span>
           }
         >
-          <Menu.Item key="1">option1</Menu.Item>
-          <Menu.Item key="2">option2</Menu.Item>
-          <Menu.Item key="3">option3</Menu.Item>
-          <Menu.Item key="4">option4</Menu.Item>
+          <Menu.Item key="1">
+            <NavLink to="/question">题库管理</NavLink>
+          </Menu.Item>
+          <Menu.Item key="2">审阅试卷</Menu.Item>
         </SubMenu>
-        <SubMenu
+        {/* <SubMenu
           key="sub2"
           title={
             <span>
@@ -42,20 +43,22 @@ const Side = () => {
           <Menu.Item key="6">option6</Menu.Item>
           <Menu.Item key="7">option7</Menu.Item>
           <Menu.Item key="8">option8</Menu.Item>
-        </SubMenu>
+        </SubMenu> */}
         <SubMenu
           key="sub3"
           title={
             <span>
               <NotificationOutlined />
-              subnav 3
+              公司管理
             </span>
           }
         >
-          <Menu.Item key="9">option9</Menu.Item>
-          <Menu.Item key="10">option10</Menu.Item>
-          <Menu.Item key="11">option11</Menu.Item>
-          <Menu.Item key="12">option12</Menu.Item>
+          <Menu.Item key="9">
+            <NavLink to="/company/info">公司信息管理</NavLink>
+          </Menu.Item>
+          <Menu.Item key="10">
+            <NavLink to="/company/job">职位管理</NavLink>
+          </Menu.Item>
         </SubMenu>
       </Menu>
     </Sider>
