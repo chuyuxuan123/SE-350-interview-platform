@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Button, Table } from "antd";
 import React from "react";
 
 const columns = [
@@ -33,7 +33,7 @@ const columns = [
     render: (intervieweeId, appiled) =>
       appiled === "true" ? (
         <span>
-          <a>查看</a>
+          <Button type="link">查看</Button>
         </span>
       ) : (
         "--"

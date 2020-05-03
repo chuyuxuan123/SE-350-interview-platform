@@ -1,6 +1,9 @@
 import { Button, Table } from "antd";
 import React from "react";
 
+import NewQuestion from "./newQuestion";
+import QuestionInfo from "./questionInfo";
+
 const columns = [
   {
     title: "题目名称",
@@ -14,7 +17,7 @@ const columns = [
   },
   {
     title: "操作",
-    render: () => <Button type="link">查看详情</Button>,
+    render: () => <QuestionInfo />,
   },
 ];
 
@@ -27,7 +30,12 @@ const data = [
 ];
 
 const QuestionManage = () => {
-  return <Table columns={columns} dataSource={data} />;
+  return (
+    <React.Fragment>
+      <NewQuestion />
+      <Table columns={columns} dataSource={data} />
+    </React.Fragment>
+  );
 };
 
 export default QuestionManage;
