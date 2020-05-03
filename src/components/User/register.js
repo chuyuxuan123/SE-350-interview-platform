@@ -33,7 +33,7 @@ const RegisterForm = () => {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
-            label="Phone"
+            label="手机号"
             name="phone"
             rules={[{ required: true, message: "Please input your phone!" }]}
           >
@@ -41,7 +41,7 @@ const RegisterForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Password"
+            label="密码"
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
@@ -49,7 +49,7 @@ const RegisterForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Confirm Password"
+            label="确认密码"
             name="confirmPassword"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
@@ -57,7 +57,7 @@ const RegisterForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Email"
+            label="电子邮件"
             name="email"
             rules={[{ required: true, message: "Please input your email!" }]}
           >
@@ -65,7 +65,7 @@ const RegisterForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Company Name"
+            label="公司名称"
             name="companyName"
             rules={[
               { required: true, message: "Please input your company name!" },
@@ -76,7 +76,7 @@ const RegisterForm = () => {
 
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
-              Submit
+              提交
             </Button>
           </Form.Item>
         </Form>

@@ -28,13 +28,13 @@ const LoginForm = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your phone!",
+                message: "请输入手机号码!",
               },
             ]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="请输入手机号"
             />
           </Form.Item>
           <Form.Item
@@ -42,14 +42,14 @@ const LoginForm = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your Password!",
+                message: "请输入密码!",
               },
             ]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="请输入密码"
             />
           </Form.Item>
 
@@ -59,9 +59,9 @@ const LoginForm = () => {
               htmlType="submit"
               className="login-form-button"
             >
-              Log in
+              登录
             </Button>
-            Or <NavLink to="/register">register now!</NavLink>
+            或者 <NavLink to="/register">注册新账号</NavLink>
           </Form.Item>
         </Form>
       </Col>
