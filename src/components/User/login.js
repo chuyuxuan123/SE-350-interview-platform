@@ -1,12 +1,67 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, Row, message } from "antd";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import userApis from "../apis/userApis";
 import "../../assets/login.css";
+import { connect } from "react-redux";
+import { setLogin, setCompanyId, setMsgId } from "../../redux/action";
+// import { store } from "../../redux/store";
 
-const LoginForm = () => {
+const mapDispatchToProps = {
+  setMsgId,
+  setLogin,
+  setCompanyId,
+};
+
+const LoginForm = (props) => {
+  const [loading, setLoading] = React.useState(false);
+  const history = useHistory();
+
+  const setMsg = (companyId) => {
+    const getMsgId = userApis.getMsgId(companyId);
+    getMsgId().then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        if (response.data.Papermsg.length === 1) {
+          const id = response.data.Papermsg[0].id;
+          // console.log(id);
+          props.setMsgId(id);
+          // console.log(store.getState());
+        }
+      }
+    });
+  };
+
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    setLoading(true);
+    const login = userApis.login(values.phone, values.password);
+    login()
+      .then((response) => {
+        if (response.status === 200) {
+          if (response.data.Interviewer.length === 1) {
+            setLoading(false);
+            props.setLogin(true);
+            props.setCompanyId(response.data.Interviewer[0].company_id);
+            setMsg(response.data.Interviewer[0].company_id);
+            // console.log(store.getState());
+            message.success("登录成功");
+            history.push("/");
+          } else {
+            setLoading(false);
+            message.error("用户名或密码错误");
+          }
+          setLoading(false);
+          // console.log(response.data);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        message.error("网络连接失败");
+        console.log(err);
+      });
+    // console.log("Received values of form: ", values);
   };
 
   return (
@@ -15,14 +70,7 @@ const LoginForm = () => {
         <div className="login-header">
           <label>登录</label>
         </div>
-        <Form
-          name="normal_login"
-          className="login-form"
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-        >
+        <Form name="normal_login" className="login-form" onFinish={onFinish}>
           <Form.Item
             name="phone"
             rules={[
@@ -58,6 +106,7 @@ const LoginForm = () => {
               type="primary"
               htmlType="submit"
               className="login-form-button"
+              loading={loading}
             >
               登录
             </Button>
@@ -69,4 +118,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default connect(null, mapDispatchToProps)(LoginForm);

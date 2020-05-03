@@ -26,6 +26,10 @@ const CompanyInfoManage = (props) => {
   const { companyId } = props;
   const [info, setInfo] = React.useState(initValue);
 
+  // React.useEffect(() => {
+
+  // }, companyId);
+
   const onFinish = (values) => {
     console.log("Success:", values);
   };

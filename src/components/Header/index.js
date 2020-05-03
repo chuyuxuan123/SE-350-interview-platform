@@ -27,6 +27,7 @@ const Head = (props) => {
 
   const handleLogout = () => {
     props.logout();
+    history.push("/");
   };
 
   return (

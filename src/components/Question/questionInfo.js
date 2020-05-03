@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Form, Input, Upload, Icon, message } from "antd";
+import { Button, Modal, Form, Input, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;

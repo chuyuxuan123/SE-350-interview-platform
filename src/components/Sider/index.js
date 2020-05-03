@@ -1,13 +1,18 @@
 import { NotificationOutlined, UserOutlined } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Badge } from "antd";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../../assets/layout.css";
+import { connect } from "react-redux";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
-const Side = () => {
+const mapStateToProps = (state) => ({
+  unread: state.unreadMsg,
+});
+
+const Side = (props) => {
   return (
     <Sider width={200} className="site-layout-background">
       <Menu
@@ -28,22 +33,12 @@ const Side = () => {
           <Menu.Item key="1">
             <NavLink to="/question">题库管理</NavLink>
           </Menu.Item>
-          <Menu.Item key="2">审阅试卷</Menu.Item>
+          <Menu.Item key="2">
+            <Badge count={props.unread} offset={[10, 0]}>
+              审阅试卷
+            </Badge>
+          </Menu.Item>
         </SubMenu>
-        {/* <SubMenu
-          key="sub2"
-          title={
-            <span>
-              <LaptopOutlined />
-              subnav 2
-            </span>
-          }
-        >
-          <Menu.Item key="5">option5</Menu.Item>
-          <Menu.Item key="6">option6</Menu.Item>
-          <Menu.Item key="7">option7</Menu.Item>
-          <Menu.Item key="8">option8</Menu.Item>
-        </SubMenu> */}
         <SubMenu
           key="sub3"
           title={
@@ -65,4 +60,4 @@ const Side = () => {
   );
 };
 
-export default Side;
+export default connect(mapStateToProps, null)(Side);

@@ -1,5 +1,7 @@
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, Row, message } from "antd";
 import React from "react";
+import { useHistory } from "react-router-dom";
+import userApis from "../apis/userApis";
 
 // style
 const layout = {
@@ -11,8 +13,32 @@ const tailLayout = {
 };
 
 const RegisterForm = () => {
+  const [loading, setLoading] = React.useState(false);
+
+  const history = useHistory();
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    setLoading(true);
+    const request = {
+      interviewer_phone_number: values.phone,
+      interviewer_email: values.email,
+      interviewer_password: values.password,
+      interviewer_company: values.companyName,
+      interviewer_role: "",
+      company_id: values.phone,
+    };
+    console.log(request);
+    const register = userApis.register(request);
+    register().then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        message.info("注册成功!");
+        setLoading(false);
+        history.push("/login");
+      }
+      // console.log(response);
+    });
+    // console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -75,7 +101,7 @@ const RegisterForm = () => {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loading}>
               提交
             </Button>
           </Form.Item>

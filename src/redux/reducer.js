@@ -1,6 +1,8 @@
 const initialState = {
   login: false,
   companyId: "",
+  unreadMsg: 0,
+  msgId: 0,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -16,6 +18,21 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         companyId: action.payload.companyId,
+      };
+    case "INCR_UNREAD_MSG":
+      return {
+        ...state,
+        unreadMsg: state.unreadMsg + 1,
+      };
+    case "CLEAR_UNREAD":
+      return {
+        ...state,
+        unreadMsg: 0,
+      };
+    case "SET_MSG_ID":
+      return {
+        ...state,
+        msgId: action.payload.msgId,
       };
     default:
       return state;
