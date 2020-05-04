@@ -26,6 +26,20 @@ const userApis = {
     );
     return response;
   },
+  getCompanyInfo: (companyId) => async () => {
+    const response = await RmpBase.get(
+      "Company/?Company.company_id=" + companyId
+    );
+    return response;
+  },
+  createCompanyInfo: (requestBody) => async () => {
+    const response = await RmpBase.post("Company", requestBody);
+    return response;
+  },
+  modifyCompanyInfo: (id, requestBody) => async () => {
+    const response = await RmpBase.put(`Company/${id}`, requestBody);
+    return response;
+  },
 };
 
 export default userApis;

@@ -40,7 +40,10 @@ const LoginForm = (props) => {
     login()
       .then((response) => {
         if (response.status === 200) {
-          if (response.data.Interviewer.length === 1) {
+          if (
+            typeof response.data.Interviewer !== "undefined" &&
+            response.data.Interviewer.length > 0
+          ) {
             setLoading(false);
             props.setLogin(true);
             props.setCompanyId(response.data.Interviewer[0].company_id);
