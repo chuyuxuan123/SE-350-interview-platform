@@ -8,6 +8,9 @@ import RegisterFrom from "./User/register";
 import CompanyInfoManage from "./Company/companyInfoManage";
 import JobPositionManage from "./Company/jobPositionManage";
 import QuestionManage from "./Question/questionManage";
+import PaperManage from "./Question/paperManage";
+import PaperReview from "./Question/paperReview";
+import NewPaper from "./Question/newPaper";
 import HomePage from "./homePage";
 import { RMP_BASE_URL } from "./apis/baseUrl";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -74,6 +77,12 @@ const App = (props) => {
                     component={JobPositionManage}
                   />
                   <Route exact path="/question" component={QuestionManage} />
+                  <Route exact path="/paper" component={PaperManage} />
+                  <Route exact path="/paper/new" component={NewPaper} />
+                  <Route
+                    path="/paper/review/:paperId"
+                    component={() => <PaperReview />}
+                  />
                 </Switch>
               </Content>
             </Layout>

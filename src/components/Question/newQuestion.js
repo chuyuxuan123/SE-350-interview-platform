@@ -1,8 +1,19 @@
 import React from "react";
-import { Button, Modal, Form, Input, Upload, Icon, message } from "antd";
+import {
+  Button,
+  Modal,
+  Form,
+  Input,
+  Upload,
+  Icon,
+  message,
+  Select,
+  Rate,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const layout = {
   labelCol: { span: 4 },
@@ -15,21 +26,25 @@ const tailLayout = {
 const NewQuestion = () => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setComfirmLoading] = React.useState(false);
+  const [form] = Form.useForm();
 
   const showModal = () => {
     setVisible(true);
   };
 
   const handleCancel = () => {
+    form.resetFields();
     setVisible(false);
   };
 
   const handleOk = () => {
+    form.submit();
     console.log("ok");
   };
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -47,7 +62,7 @@ const NewQuestion = () => {
         新建问题
       </Button>
       <Modal
-        title="Title"
+        title="新建问题"
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}
@@ -56,6 +71,7 @@ const NewQuestion = () => {
         <Form
           {...layout}
           name="basic"
+          form={form}
           //   initialValues={info}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -68,11 +84,24 @@ const NewQuestion = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="具体信息"
+            label="题目描述"
             name="info"
             // rules={[{ required: true, message: "Please input your username!" }]}
           >
             <TextArea rows={4} />
+          </Form.Item>
+          <Form.Item label="领域" name="domain">
+            <Select placeholder="选择试题类型" allowClear>
+              <Option value="hash">哈希表</Option>
+              <Option value="queue">队列&栈</Option>
+              <Option value="ML">机器学习101</Option>
+              <Option value="recursion">递归</Option>
+              <Option value="array">数组和字符串</Option>
+              <Option value="BST">二叉搜索树</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item label="难度" name="difficulty">
+            <Rate />
           </Form.Item>
         </Form>
       </Modal>

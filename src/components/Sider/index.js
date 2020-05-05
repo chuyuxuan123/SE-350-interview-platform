@@ -34,9 +34,14 @@ const Side = (props) => {
             <NavLink to="/question">题库管理</NavLink>
           </Menu.Item>
           <Menu.Item key="2">
-            <Badge count={props.unread} offset={[10, 0]}>
-              审阅试卷
-            </Badge>
+            <NavLink to="/paper">
+              <Badge count={props.unread} offset={[10, 0]}>
+                审阅试卷
+              </Badge>
+            </NavLink>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <NavLink to="/paper/new">新建试卷</NavLink>
           </Menu.Item>
         </SubMenu>
         <SubMenu
