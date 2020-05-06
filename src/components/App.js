@@ -14,7 +14,8 @@ import NewPaper from "./Question/newPaper";
 import HomePage from "./homePage";
 import { RMP_BASE_URL } from "./apis/baseUrl";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, notification, Button } from "antd";
+import { incrUnreadMsg, clearUnread } from "../redux/action";
 import "../assets/layout.css";
 
 const { Content } = Layout;
@@ -25,8 +26,17 @@ const mapStateToProps = (state) => ({
   msgId: state.msgId,
 });
 
+const mapDispatchToProps = {
+  incrUnreadMsg,
+  clearUnread,
+};
+
 const App = (props) => {
   const { login, msgId } = props;
+
+  const closeNotification = () => {
+    props.clearUnread();
+  };
 
   if (msgId !== 0) {
     var source = new EventSource(
@@ -37,6 +47,23 @@ const App = (props) => {
       console.log(event);
     };
     source.onmessage = function (event) {
+      props.incrUnreadMsg();
+      // const key = `open${Date.now()}`;
+      // const btn = (
+      //   <Button
+      //     type="primary"
+      //     size="small"
+      //     onClick={() => notification.close(key)}
+      //   >
+      //     前往
+      //   </Button>
+      // );
+      notification.open({
+        message: "您有一份新的试卷待批阅",
+        description: "请前往审阅试卷模块",
+        // btn,
+        // onClose: closeNotification,
+      });
       console.log(event.data);
     };
     source.onerror = (event) => {
@@ -94,4 +121,4 @@ const App = (props) => {
   );
 };
 
-export default connect(mapStateToProps, null)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

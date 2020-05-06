@@ -14,6 +14,9 @@ const PaperManage = () => {
       <TabPane tab="已批阅试卷" key="2">
         <PaperTable type="finished" />
       </TabPane>
+      <TabPane tab="新建的试卷" key="3">
+        <PaperTable type="new" />
+      </TabPane>
     </Tabs>
   );
 };

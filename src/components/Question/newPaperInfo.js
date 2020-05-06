@@ -9,14 +9,6 @@ import {
   Rate,
 } from "antd";
 
-const layout = {
-  // labelCol: { span: 1 },
-  wrapperCol: { span: 16 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 10, span: 14 },
-};
-
 const mockData = [
   {
     key: 1,
@@ -54,46 +46,30 @@ const mockData = [
   },
 ];
 
-const PaperReview = (props) => {
-  const onFinish = (values) => {
-    console.log(values);
-  };
+const NewPaperInfo = () => {
   return (
     <React.Fragment>
-      <Form {...layout} onFinish={onFinish}>
-        {mockData.map((item, index) => (
-          <React.Fragment key={index}>
-            <Descriptions title={item.title} bordered>
-              <Descriptions.Item label="题目信息" span={3}>
-                {item.questionContent}
-              </Descriptions.Item>
-              <Descriptions.Item label="样例" span={3}>
-                {item.questionSample}
-              </Descriptions.Item>
-              <Descriptions.Item label="答案" span={3}>
-                {item.answer}
-              </Descriptions.Item>
-            </Descriptions>
-            <Form.Item label="分数" name={index + "score"}>
-              <Rate />
-            </Form.Item>
-            <Form.Item label="答案评价" name={index + "quality"}>
-              <Input />
-            </Form.Item>
-            <Form.Item label="试题反馈" name={index + "review"}>
-              <Rate />
-            </Form.Item>
-            {index !== mockData.length - 1 && <Divider />}
-          </React.Fragment>
-        ))}
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            提交
-          </Button>
-        </Form.Item>
-      </Form>
+      {mockData.map((item, index) => (
+        <div key={index}>
+          <Descriptions
+            title={"题目" + (index + 1).toString() + ": " + item.title}
+            bordered
+          >
+            <Descriptions.Item label="题目信息" span={3}>
+              {item.questionContent}
+            </Descriptions.Item>
+            <Descriptions.Item label="样例" span={3}>
+              {item.questionSample}
+            </Descriptions.Item>
+            <Descriptions.Item label="难度" span={3}>
+              <Rate disabled defaultValue={item.difficulty} />
+            </Descriptions.Item>
+          </Descriptions>
+          {index !== mockData.length - 1 && <Divider />}
+        </div>
+      ))}
     </React.Fragment>
   );
 };
 
-export default PaperReview;
+export default NewPaperInfo;

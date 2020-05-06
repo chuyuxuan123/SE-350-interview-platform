@@ -1,9 +1,10 @@
-import { NotificationOutlined, UserOutlined } from "@ant-design/icons";
+import { SolutionOutlined, HomeOutlined } from "@ant-design/icons";
 import { Layout, Menu, Badge } from "antd";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../../assets/layout.css";
 import { connect } from "react-redux";
+import { clearUnread } from "../../redux/action";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -11,6 +12,10 @@ const { Sider } = Layout;
 const mapStateToProps = (state) => ({
   unread: state.unreadMsg,
 });
+
+const mapDispatchToProps = {
+  clearUnread,
+};
 
 const Side = (props) => {
   return (
@@ -25,7 +30,7 @@ const Side = (props) => {
           key="sub1"
           title={
             <span>
-              <UserOutlined />
+              <SolutionOutlined />
               试题管理
             </span>
           }
@@ -33,7 +38,12 @@ const Side = (props) => {
           <Menu.Item key="1">
             <NavLink to="/question">题库管理</NavLink>
           </Menu.Item>
-          <Menu.Item key="2">
+          <Menu.Item
+            key="2"
+            onClick={() => {
+              props.clearUnread();
+            }}
+          >
             <NavLink to="/paper">
               <Badge count={props.unread} offset={[10, 0]}>
                 审阅试卷
@@ -48,7 +58,7 @@ const Side = (props) => {
           key="sub3"
           title={
             <span>
-              <NotificationOutlined />
+              <HomeOutlined />
               公司管理
             </span>
           }
@@ -65,4 +75,4 @@ const Side = (props) => {
   );
 };
 
-export default connect(mapStateToProps, null)(Side);
+export default connect(mapStateToProps, mapDispatchToProps)(Side);
