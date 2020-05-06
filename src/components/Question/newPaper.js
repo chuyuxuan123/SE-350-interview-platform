@@ -58,7 +58,7 @@ const NewPaper = () => {
           </Button>
         </Form.Item>
       </Form>
-      <NewPaperInfo />
+      {/* <NewPaperInfo /> */}
     </React.Fragment>
   );
 };

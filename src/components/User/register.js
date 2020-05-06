@@ -32,13 +32,16 @@ const RegisterForm = () => {
     register().then((response) => {
       if (response.status === 200) {
         console.log(response.data);
+        const createPaperMsg = userApis.createPaperMsg({
+          company_id: values.phone,
+          version: 0,
+        });
+        createPaperMsg();
         message.info("注册成功!");
         setLoading(false);
         history.push("/login");
       }
-      // console.log(response);
     });
-    // console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo) => {

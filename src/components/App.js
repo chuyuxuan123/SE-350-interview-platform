@@ -12,6 +12,7 @@ import PaperManage from "./Question/paperManage";
 import PaperReview from "./Question/paperReview";
 import NewPaper from "./Question/newPaper";
 import HomePage from "./homePage";
+import NewPaperInfo from "./Question/newPaperInfo";
 import { RMP_BASE_URL } from "./apis/baseUrl";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Layout, notification, Button } from "antd";
@@ -105,10 +106,14 @@ const App = (props) => {
                   />
                   <Route exact path="/question" component={QuestionManage} />
                   <Route exact path="/paper" component={PaperManage} />
-                  <Route exact path="/paper/new" component={NewPaper} />
+                  <Route exact path="/newpaper" component={NewPaper} />
                   <Route
                     path="/paper/review/:paperId"
                     component={() => <PaperReview />}
+                  />
+                  <Route
+                    path="/paper/new/:paperId"
+                    component={() => <NewPaperInfo />}
                   />
                 </Switch>
               </Content>

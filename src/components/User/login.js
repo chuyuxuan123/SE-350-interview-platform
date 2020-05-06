@@ -24,7 +24,13 @@ const LoginForm = (props) => {
     getMsgId().then((response) => {
       if (response.status === 200) {
         console.log(response.data);
-        if (response.data.Papermsg.length === 1) {
+        if (typeof response.data.Papermsg === "undefined") {
+          const createPaperMsg = userApis.createPaperMsg({
+            company_id: companyId,
+            version: 0,
+          });
+          createPaperMsg();
+        } else if (response.data.Papermsg.length === 1) {
           const id = response.data.Papermsg[0].id;
           // console.log(id);
           props.setMsgId(id);

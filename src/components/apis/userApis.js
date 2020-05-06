@@ -20,6 +20,10 @@ const userApis = {
     );
     return response;
   },
+  createPaperMsg: (papermsg) => async () => {
+    const response = await RmpBase.post("Papermsg/", papermsg);
+    return response;
+  },
   getMsgId: (companyId) => async () => {
     const response = await RmpBase.get(
       "Papermsg/?Papermsg.company_id=" + companyId
