@@ -1,8 +1,8 @@
-import React from "react";
 import { Layout, Menu } from "antd";
-import "../../assets/layout.css";
+import React from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import "../../assets/layout.css";
 import { logout, setLogin } from "../../redux/action";
 
 const { Header } = Layout;
@@ -27,13 +27,16 @@ const Head = (props) => {
 
   const handleLogout = () => {
     props.logout();
+    history.push("/");
   };
 
   return (
     <Header className="header">
       <div className="logo" />
       <Menu theme="dark" mode="horizontal" selectable={false}>
-        <Menu.Item key="1">首页</Menu.Item>
+        <Menu.Item key="1">
+          <NavLink to="/">首页</NavLink>
+        </Menu.Item>
         {login === false && (
           <Menu.Item key="2" onClick={handleLogin} style={{ float: "right" }}>
             登录

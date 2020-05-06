@@ -21,3 +21,24 @@ export const setCompanyId = (companyId) => {
     },
   };
 };
+
+export const incrUnreadMsg = () => {
+  return {
+    type: "INCR_UNREAD_MSG",
+  };
+};
+
+export const clearUnread = () => {
+  return {
+    type: "CLEAR_UNREAD",
+  };
+};
+
+export const setMsgId = (msgId) => {
+  return {
+    type: "SET_MSG_ID",
+    payload: {
+      msgId,
+    },
+  };
+};

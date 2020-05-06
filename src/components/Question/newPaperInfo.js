@@ -1,33 +1,15 @@
-import { Button, Table, Rate } from "antd";
 import React from "react";
+import {
+  Button,
+  Form,
+  Input,
+  message,
+  Divider,
+  Descriptions,
+  Rate,
+} from "antd";
 
-import NewQuestion from "./newQuestion";
-import QuestionInfo from "./questionInfo";
-
-const columns = [
-  {
-    title: "题目名称",
-    dataIndex: "title",
-    key: "title",
-  },
-  {
-    title: "分类",
-    dataIndex: "domain",
-    key: "domain",
-  },
-  {
-    title: "难度",
-    dataIndex: "difficulty",
-    key: "difficulty",
-    render: (difficulty) => <Rate disabled defaultValue={difficulty} />,
-  },
-  {
-    title: "操作",
-    render: (item) => <QuestionInfo question={item} />,
-  },
-];
-
-const data = [
+const mockData = [
   {
     key: 1,
     title: "链表加法",
@@ -40,6 +22,10 @@ const data = [
       "Explanation: 342 + 465 = 807.",
     domain: "数组和字符串",
     difficulty: 1,
+    answer: "",
+    score: 0,
+    quality: 0,
+    comment: "",
   },
   {
     key: 2,
@@ -53,25 +39,37 @@ const data = [
       "Explanation: 342 + 465 = 807.",
     domain: "哈希表",
     difficulty: 2,
+    answer: "",
+    score: 0,
+    quality: 0,
+    comment: "",
   },
-  // { key: 3, title: "题目1", domain: "数据结构", difficulty: 4 },
-  // { key: 4, title: "题目1", domain: "数据结构", difficulty: 5 },
-  // { key: 5, title: "题目1", domain: "数据结构", difficulty: 2 },
 ];
 
-const QuestionManage = () => {
-  const [questionList, setQuestionList] = React.useState(data);
-
-  const addQuestion = (newQuestion) => {
-    setQuestionList([...questionList, newQuestion]);
-  };
-
+const NewPaperInfo = () => {
   return (
     <React.Fragment>
-      <NewQuestion addQuestion={addQuestion} />
-      <Table columns={columns} dataSource={questionList} />
+      {mockData.map((item, index) => (
+        <div key={index}>
+          <Descriptions
+            title={"题目" + (index + 1).toString() + ": " + item.title}
+            bordered
+          >
+            <Descriptions.Item label="题目信息" span={3}>
+              {item.questionContent}
+            </Descriptions.Item>
+            <Descriptions.Item label="样例" span={3}>
+              {item.questionSample}
+            </Descriptions.Item>
+            <Descriptions.Item label="难度" span={3}>
+              <Rate disabled defaultValue={item.difficulty} />
+            </Descriptions.Item>
+          </Descriptions>
+          {index !== mockData.length - 1 && <Divider />}
+        </div>
+      ))}
     </React.Fragment>
   );
 };
 
-export default QuestionManage;
+export default NewPaperInfo;

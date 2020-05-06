@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import Header from "./Header";
 import Footer from "./Footer";
 import Sider from "./Sider";
@@ -7,13 +8,71 @@ import RegisterFrom from "./User/register";
 import CompanyInfoManage from "./Company/companyInfoManage";
 import JobPositionManage from "./Company/jobPositionManage";
 import QuestionManage from "./Question/questionManage";
+import PaperManage from "./Question/paperManage";
+import PaperReview from "./Question/paperReview";
+import NewPaper from "./Question/newPaper";
+import HomePage from "./homePage";
+import { RMP_BASE_URL } from "./apis/baseUrl";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, notification, Button } from "antd";
+import { incrUnreadMsg, clearUnread } from "../redux/action";
 import "../assets/layout.css";
 
 const { Content } = Layout;
 
-function App() {
+const mapStateToProps = (state) => ({
+  login: state.login,
+  companyId: state.companyId,
+  msgId: state.msgId,
+});
+
+const mapDispatchToProps = {
+  incrUnreadMsg,
+  clearUnread,
+};
+
+const App = (props) => {
+  const { login, msgId } = props;
+
+  const closeNotification = () => {
+    props.clearUnread();
+  };
+
+  if (msgId !== 0) {
+    var source = new EventSource(
+      RMP_BASE_URL + "Papermsg/" + msgId + "/syncronize"
+    );
+    source.onopen = function (event) {
+      console.log("get connecting...");
+      console.log(event);
+    };
+    source.onmessage = function (event) {
+      props.incrUnreadMsg();
+      // const key = `open${Date.now()}`;
+      // const btn = (
+      //   <Button
+      //     type="primary"
+      //     size="small"
+      //     onClick={() => notification.close(key)}
+      //   >
+      //     前往
+      //   </Button>
+      // );
+      notification.open({
+        message: "您有一份新的试卷待批阅",
+        description: "请前往审阅试卷模块",
+        // btn,
+        // onClose: closeNotification,
+      });
+      console.log(event.data);
+    };
+    source.onerror = (event) => {
+      console.log(event);
+    };
+  } else {
+    // console.log("user logout");
+  }
+
   return (
     <div className="App">
       <Router>
@@ -31,6 +90,7 @@ function App() {
                 }}
               >
                 <Switch>
+                  <Route exact path="/" component={HomePage} />
                   <Route path="/login" component={LoginForm} />
                   <Route path="/register" component={RegisterFrom} />
                   <Route
@@ -44,10 +104,13 @@ function App() {
                     component={JobPositionManage}
                   />
                   <Route exact path="/question" component={QuestionManage} />
+                  <Route exact path="/paper" component={PaperManage} />
+                  <Route exact path="/paper/new" component={NewPaper} />
+                  <Route
+                    path="/paper/review/:paperId"
+                    component={() => <PaperReview />}
+                  />
                 </Switch>
-                {/* <QuestionManage /> */}
-                {/* <LoginForm /> */}
-                {/* <RegisterFrom /> */}
               </Content>
             </Layout>
           </Layout>
@@ -56,6 +119,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
