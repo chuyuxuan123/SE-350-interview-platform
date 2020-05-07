@@ -26,6 +26,11 @@ const PaperTable = (props) => {
             </Button>
           )}
           {type === "finished" && <Button type="link">查看</Button>}
+          {type === "new" && (
+            <Button type="link">
+              <NavLink to={"/paper/new/" + item.paperId}>查看</NavLink>
+            </Button>
+          )}
         </React.Fragment>
       ),
     },

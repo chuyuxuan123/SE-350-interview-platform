@@ -10,6 +10,7 @@ const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const mapStateToProps = (state) => ({
+  login: state.login,
   unread: state.unreadMsg,
 });
 
@@ -46,12 +47,12 @@ const Side = (props) => {
           >
             <NavLink to="/paper">
               <Badge count={props.unread} offset={[10, 0]}>
-                审阅试卷
+                试卷管理
               </Badge>
             </NavLink>
           </Menu.Item>
           <Menu.Item key="3">
-            <NavLink to="/paper/new">新建试卷</NavLink>
+            <NavLink to="/newpaper">新建试卷</NavLink>
           </Menu.Item>
         </SubMenu>
         <SubMenu
