@@ -50,8 +50,8 @@ steps:
         from_secret: docker_password
     commands:
       - docker login -u $USERNAME -p $PASSWORD 
-      - docker build --no-cache -t chuyuxuan/se-350 .
-      - docker push chuyuxuan/se-350:latest
+      - docker build --no-cache -t chuyuxuan/se-350-frontend .
+      - docker push chuyuxuan/se-350-frontend:1.0.0
     when:
       branch:
         - master

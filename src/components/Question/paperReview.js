@@ -8,6 +8,7 @@ import {
   Descriptions,
   Rate,
 } from "antd";
+import { useHistory } from "react-router-dom";
 
 const layout = {
   // labelCol: { span: 1 },
@@ -30,7 +31,7 @@ const mockData = [
       "Explanation: 342 + 465 = 807.",
     domain: "数组和字符串",
     difficulty: 1,
-    answer: "",
+    answer: "my answer1",
     score: 0,
     quality: 0,
     comment: "",
@@ -47,7 +48,7 @@ const mockData = [
       "Explanation: 342 + 465 = 807.",
     domain: "哈希表",
     difficulty: 2,
-    answer: "",
+    answer: "my answer2",
     score: 0,
     quality: 0,
     comment: "",
@@ -55,7 +56,11 @@ const mockData = [
 ];
 
 const PaperReview = (props) => {
+  const form = Form.useForm();
+  const history = useHistory();
   const onFinish = (values) => {
+    message.success("提交成功");
+    history.push("/");
     console.log(values);
   };
   return (

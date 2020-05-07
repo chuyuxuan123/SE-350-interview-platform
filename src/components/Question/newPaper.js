@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Form, Input, message, Select } from "antd";
-import NewPaperInfo from "./newPaperInfo";
 
 const layout = {
   labelCol: { span: 3 },
@@ -22,13 +21,18 @@ const domains = [
 ];
 
 const NewPaper = () => {
+  const [form] = Form.useForm();
+
   const onFinish = (values) => {
+    message.success("新建成功");
+    form.resetFields();
     console.log(values);
   };
   return (
     <React.Fragment>
       <Form
         {...layout}
+        form={form}
         name="basic"
         //   initialValues={info}
         onFinish={onFinish}
