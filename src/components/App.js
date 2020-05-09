@@ -49,16 +49,6 @@ const App = (props) => {
     };
     source.onmessage = function (event) {
       props.incrUnreadMsg();
-      // const key = `open${Date.now()}`;
-      // const btn = (
-      //   <Button
-      //     type="primary"
-      //     size="small"
-      //     onClick={() => notification.close(key)}
-      //   >
-      //     前往
-      //   </Button>
-      // );
       notification.open({
         message: "您有一份新的试卷待批阅",
         description: "请前往审阅试卷模块",
