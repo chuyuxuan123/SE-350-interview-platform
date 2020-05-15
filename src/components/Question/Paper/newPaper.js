@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form, Input, message, Select, DatePicker } from "antd";
 import QuestionApis from "../../apis/questionApis";
+import { connect } from "react-redux";
 
 const layout = {
   labelCol: { span: 3 },
@@ -22,18 +23,23 @@ const domains = [
   "二叉搜索树",
 ];
 
-const NewPaper = () => {
+const mapStateToProps = (state) => ({
+  msgId: state.msgId,
+});
+
+const NewPaper = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     const requestBody = {
-      tlttle: values.title,
+      tittle: values.title,
       deadline: values.deadline.format("MMMM Do YYYY, h:mm:ss a"),
       time: values.time,
       domains: values.domains,
       description: "paper description",
+      companyMessageId: props.msgId,
     };
-    // console.log(requestBody);
+    console.log(requestBody);
     const addTestPaper = QuestionApis.createTestPaper(requestBody);
     addTestPaper().then((response) => {
       if (response.status === 200) {
@@ -87,4 +93,4 @@ const NewPaper = () => {
   );
 };
 
-export default NewPaper;
+export default connect(mapStateToProps, null)(NewPaper);
