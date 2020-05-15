@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Modal, Form, Input, Icon, message, Select, Rate } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import QuestionApis from "../../apis/questionApis";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -29,7 +30,7 @@ const NewQuestion = (props) => {
 
   const handleOk = () => {
     form.submit();
-    console.log("ok");
+    // console.log("ok");
   };
 
   const onFinish = (values) => {
@@ -42,9 +43,24 @@ const NewQuestion = (props) => {
       domain: values.domain,
       difficulty: values.difficulty,
     };
-    console.log(newQuestion);
-    props.addQuestion(newQuestion);
-    message.success("添加成功");
+    // console.log(newQuestion);
+    const addRequest = QuestionApis.addQuestion({
+      name: values.title,
+      question_content: values.info,
+      domain: values.domain,
+      difficulty: values.difficulty,
+      approximate_time: parseInt(values.time),
+    });
+    addRequest()
+      .then((response) => {
+        if (response.status === 200) {
+          props.addQuestion(newQuestion);
+          message.success("添加成功");
+        }
+      })
+      .catch((error) => {
+        message.error("网络出错");
+      });
     form.resetFields();
   };
 
@@ -110,6 +126,9 @@ const NewQuestion = (props) => {
           </Form.Item>
           <Form.Item label="难度" name="difficulty">
             <Rate />
+          </Form.Item>
+          <Form.Item label="完成时间" name="time">
+            <Input addonAfter="分钟" />
           </Form.Item>
         </Form>
       </Modal>

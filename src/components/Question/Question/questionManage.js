@@ -1,5 +1,6 @@
 import { Button, Table, Rate } from "antd";
 import React from "react";
+import QuestionApis from "../../apis/questionApis";
 
 import NewQuestion from "./newQuestion";
 import QuestionInfo from "./questionInfo";
@@ -60,7 +61,29 @@ const data = [
 ];
 
 const QuestionManage = () => {
-  const [questionList, setQuestionList] = React.useState(data);
+  const [questionList, setQuestionList] = React.useState([]);
+
+  React.useEffect(() => {
+    const getAllQuestions = QuestionApis.getAllQuestions();
+    getAllQuestions().then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        const data = [];
+        for (const question of response.data) {
+          const tableRow = {
+            key: question.id,
+            title: question.name,
+            questionContent: question.question_content,
+            questionSample: question.question_content,
+            domain: question.domain,
+            difficulty: question.difficulty,
+          };
+          data.push(tableRow);
+        }
+        setQuestionList(data);
+      }
+    });
+  }, []);
 
   const addQuestion = (newQuestion) => {
     setQuestionList([...questionList, newQuestion]);

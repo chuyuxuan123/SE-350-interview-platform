@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Form, Input, message, Select } from "antd";
+import { Button, Form, Input, message, Select, DatePicker } from "antd";
+import QuestionApis from "../../apis/questionApis";
 
 const layout = {
   labelCol: { span: 3 },
@@ -10,6 +11,7 @@ const tailLayout = {
 };
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const domains = [
   "哈希表",
@@ -24,7 +26,22 @@ const NewPaper = () => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    message.success("新建成功");
+    const requestBody = {
+      tlttle: values.title,
+      deadline: values.deadline.format("MMMM Do YYYY, h:mm:ss a"),
+      time: values.time,
+      domains: values.domains,
+      description: "paper description",
+    };
+    // console.log(requestBody);
+    const addTestPaper = QuestionApis.createTestPaper(requestBody);
+    addTestPaper().then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        message.success("新建成功");
+        form.resetFields();
+      }
+    });
     form.resetFields();
     console.log(values);
   };
@@ -44,7 +61,7 @@ const NewPaper = () => {
         <Form.Item label="试题数" name="amount">
           <Input />
         </Form.Item>
-        <Form.Item label="考试时间" name="time">
+        <Form.Item label="考试时长" name="time">
           <Input addonAfter="分钟" />
         </Form.Item>
         <Form.Item label="选择试题范围" name="domains">
@@ -55,6 +72,9 @@ const NewPaper = () => {
               </Option>
             ))}
           </Select>
+        </Form.Item>
+        <Form.Item label="考试结束时间" name="deadline">
+          <DatePicker showTime />
         </Form.Item>
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">

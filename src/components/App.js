@@ -7,12 +7,13 @@ import LoginForm from "./User/login";
 import RegisterFrom from "./User/register";
 import CompanyInfoManage from "./Company/companyInfoManage";
 import JobPositionManage from "./Company/jobPositionManage";
-import QuestionManage from "./Question/questionManage";
-import PaperManage from "./Question/paperManage";
-import PaperReview from "./Question/paperReview";
-import NewPaper from "./Question/newPaper";
+import QuestionManage from "./Question/Question/questionManage";
+import PaperManage from "./Question/Paper/paperManage";
+import PaperReview from "./Question/Paper/paperReview";
+import NewPaper from "./Question/Paper/newPaper";
 import HomePage from "./homePage";
-import NewPaperInfo from "./Question/newPaperInfo";
+import NewPaperInfo from "./Question/Paper/newPaperInfo";
+import ReviewedPaper from "./Question/Paper/reviewedPaper";
 import { RMP_BASE_URL } from "./apis/baseUrl";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Layout, notification, Button } from "antd";
@@ -99,11 +100,15 @@ const App = (props) => {
                   <Route exact path="/newpaper" component={NewPaper} />
                   <Route
                     path="/paper/review/:paperId"
-                    component={() => <PaperReview />}
+                    component={(props) => <PaperReview {...props} />}
                   />
                   <Route
                     path="/paper/new/:paperId"
-                    component={() => <NewPaperInfo />}
+                    component={(props) => <NewPaperInfo {...props} />}
+                  />
+                  <Route
+                    path="/paper/reviewed/:paperId"
+                    component={(props) => <ReviewedPaper {...props} />}
                   />
                 </Switch>
               </Content>

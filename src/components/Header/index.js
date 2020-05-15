@@ -32,7 +32,7 @@ const Head = (props) => {
 
   return (
     <Header className="header">
-      <div className="logo" />
+      <div className="logo">Code Rank</div>
       <Menu theme="dark" mode="horizontal" selectable={false}>
         <Menu.Item key="1">
           <NavLink to="/">首页</NavLink>

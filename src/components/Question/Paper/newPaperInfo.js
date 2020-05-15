@@ -8,6 +8,7 @@ import {
   Descriptions,
   Rate,
 } from "antd";
+import QuestionApis from "../../apis/questionApis";
 
 const mockData = [
   {
@@ -46,10 +47,34 @@ const mockData = [
   },
 ];
 
-const NewPaperInfo = () => {
+const NewPaperInfo = (props) => {
+  const paperId = props.match.params.paperId;
+  const [questions, setQuestions] = React.useState([]);
+
+  React.useEffect(() => {
+    const getPaperinfo = QuestionApis.getTestPaperById(paperId);
+    getPaperinfo().then((response) => {
+      if (response.status === 200) {
+        // console.log(response.data);
+        const tmp = [];
+        for (const rawQ of response.data.questionList) {
+          tmp.push({
+            key: rawQ.question.id,
+            title: rawQ.question.name,
+            questionContent: rawQ.question.question_content,
+            questionSample: rawQ.question.question_content,
+            domain: rawQ.question.domain,
+            difficulty: rawQ.question.difficulty,
+          });
+        }
+        setQuestions(tmp);
+      }
+    });
+  }, [paperId]);
+
   return (
     <React.Fragment>
-      {mockData.map((item, index) => (
+      {questions.map((item, index) => (
         <div key={index}>
           <Descriptions
             title={"题目" + (index + 1).toString() + ": " + item.title}
@@ -65,7 +90,7 @@ const NewPaperInfo = () => {
               <Rate disabled defaultValue={item.difficulty} />
             </Descriptions.Item>
           </Descriptions>
-          {index !== mockData.length - 1 && <Divider />}
+          {index !== questions.length - 1 && <Divider />}
         </div>
       ))}
     </React.Fragment>

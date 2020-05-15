@@ -9,6 +9,7 @@ import {
   Rate,
 } from "antd";
 import { useHistory } from "react-router-dom";
+import QuestionApis from "../../apis/questionApis";
 
 const layout = {
   // labelCol: { span: 1 },
@@ -56,17 +57,64 @@ const mockData = [
 ];
 
 const PaperReview = (props) => {
+  const paperId = props.match.params.paperId;
+
+  const [questions, setQuestions] = React.useState([]);
+
+  React.useEffect(() => {
+    const getPaperinfo = QuestionApis.getTestPaperById(paperId);
+    getPaperinfo().then((response) => {
+      if (response.status === 200) {
+        console.log(response.data);
+        const tmp = [];
+        for (const rawQ of response.data.questionList) {
+          tmp.push({
+            key: rawQ.question.id,
+            title: rawQ.question.name,
+            questionContent: rawQ.question.question_content,
+            questionSample: rawQ.question.question_content,
+            domain: rawQ.question.domain,
+            difficulty: rawQ.question.difficulty,
+            answer: rawQ.answer_content,
+          });
+        }
+        setQuestions(tmp);
+      }
+    });
+  }, [paperId]);
+
   const form = Form.useForm();
   const history = useHistory();
   const onFinish = (values) => {
-    message.success("提交成功");
-    history.push("/");
-    console.log(values);
+    const requestBody = { paperID: paperId, questions: [] };
+    for (const question of questions) {
+      const questionId = question.key;
+      requestBody.questions.push({
+        questionID: questionId,
+        score: values[`${questionId}_score`],
+        comment: values[`${questionId}_quality`],
+        grade: values[`${questionId}_review`],
+      });
+    }
+    console.log(requestBody);
+    const reviewPaper = QuestionApis.reviewPaper(requestBody);
+    reviewPaper()
+      .then((response) => {
+        if (response.status === 200) {
+          console.log(response.data);
+          message.success("提交成功");
+          history.push("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        message.error("网络异常");
+      });
   };
   return (
     <React.Fragment>
       <Form {...layout} onFinish={onFinish}>
-        {mockData.map((item, index) => (
+        {questions.map((item, index) => (
           <React.Fragment key={index}>
             <Descriptions title={item.title} bordered>
               <Descriptions.Item label="题目信息" span={3}>
@@ -79,16 +127,16 @@ const PaperReview = (props) => {
                 {item.answer}
               </Descriptions.Item>
             </Descriptions>
-            <Form.Item label="分数" name={index + "score"}>
+            <Form.Item label="分数" name={item.key + "_score"}>
               <Rate />
             </Form.Item>
-            <Form.Item label="答案评价" name={index + "quality"}>
+            <Form.Item label="答案评价" name={item.key + "_quality"}>
               <Input />
             </Form.Item>
-            <Form.Item label="试题反馈" name={index + "review"}>
+            <Form.Item label="试题反馈" name={item.key + "_review"}>
               <Rate />
             </Form.Item>
-            {index !== mockData.length - 1 && <Divider />}
+            {index !== questions.length - 1 && <Divider />}
           </React.Fragment>
         ))}
         <Form.Item {...tailLayout}>
